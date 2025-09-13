@@ -1,9 +1,8 @@
-// src/index.ts
 import { Pokemon } from './models/Pokemon';
 import { PokemonRepository } from './repositories/PokemonRepository';
 import { PokemonService } from './services/PokemonService';
 
-const DEFAULT_POKEMONS = {
+const DEFAULT_POKEMONS: Record<string, Pokemon> = {
   bulbasaur: new Pokemon('bulbasaur', 96, { hp: 95, attack: 65, defense: 90, speed: 70 }),
   charmander: new Pokemon('charmander', 79, { hp: 78, attack: 95, defense: 82, speed: 88 }),
   squirtle: new Pokemon('squirtle', 64, { hp: 78, attack: 75, defense: 68, speed: 65 }),
@@ -16,15 +15,41 @@ const pokemonRepository = new PokemonRepository();
 const pokemonService = new PokemonService(pokemonRepository);
 
 function main() {
-  pokemonRepository.addPokemon(DEFAULT_POKEMONS.bulbasaur);
-  pokemonRepository.addPokemon(DEFAULT_POKEMONS.charmander);
-  pokemonRepository.addPokemon(DEFAULT_POKEMONS.pikachu);
+  const args = process.argv.slice(2);
+  const command = args[0];
 
-  const averageLevel = pokemonService.getAverageLevel();
-  const fastestPokemon = pokemonService.getFastestPokemon();
-  if (averageLevel < 80) throw new Error("Average level is less than 80");
-  console.log("Average level: ", averageLevel);
-  console.log("Fastest pokemon: ", fastestPokemon);
+  switch (command) {
+   case 'add': {
+
+    const pokemonName = args[1];
+    if(!pokemonName){
+      console.error('POR FAVOR INGRESA UN NOMBRE DE POKEMÓN');
+      break;
+    }
+
+    const pokemonAdd = DEFAULT_POKEMONS[pokemonName.toLowerCase()];
+    if(!pokemonAdd){
+      console.error('ESTE POKEMÓN NO ESTA EN LOS PREDETERMINADOS');
+      break;
+    }
+
+    pokemonRepository.addPokemon(pokemonAdd);
+
+   }
+
+   case 'average': {
+      const avg = pokemonService.getAverageLevel();
+      console.log(avg);
+      break;
+   }
+
+   case 'fastest': {
+      const fastest = pokemonService.getFastestPokemon();
+      console.log(fastest);
+      break;
+   }
+
+  }
 }
 
 main();
