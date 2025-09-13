@@ -13,9 +13,8 @@ export class PokemonRepository {
   }
 
   private loadFromFile() {
-    if(!fs.existsSync(this.FILE_PATH)){
-      return [];
-    }
+    if(!fs.existsSync(this.FILE_PATH)) return [];
+    
 
       try {
       const fileContent = fs.readFileSync(this.FILE_PATH, 'utf-8');
