@@ -1,7 +1,7 @@
 {
-  "name": "project",
+  "name": "Pokemón",
   "version": "1.0.0",
-  "description": "",
+  "description": "Reto Día 5 - Configuración del proyecto",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
