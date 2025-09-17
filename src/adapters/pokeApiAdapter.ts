@@ -19,8 +19,8 @@ export class PokeAPIAdapter {
     const stats = new Map<string, number>();
     
     for(let i=0; i< data.stats.length; i++){
-      const s = data.stats[i];
-      stats.set(s.stat.name, s.base_stat);
+      const pokemonStat = data.stats[i];
+      stats.set(pokemonStat.stat.name, pokemonStat.base_stat);
     }
 
     return {
